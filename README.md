@@ -15,21 +15,20 @@ stays saved even after you close the browser.
 
 ## Installation
 
-1. **Download the extension** from <https://github.com/Dexmodzz/MultiBox>:
-   - **Without git**: click the green **Code** button → **Download ZIP**, then extract the ZIP
-     (you'll get a `MultiBox-main` folder);
-   - **With git**:
-     ```bash
-     git clone https://github.com/Dexmodzz/MultiBox.git
-     ```
+1. **Download the extension** from the **[Releases page](https://github.com/Dexmodzz/MultiBox/releases/latest)**:
+   download the `MultiBox-<version>.zip` file (e.g. `MultiBox-1.1.1.zip`) and extract it
+   (you'll get a `MultiBox-<version>` folder).
+
+   Developers can also clone the repository: `git clone https://github.com/Dexmodzz/MultiBox.git`
 2. Open `chrome://extensions` (or `brave://extensions`).
 3. Turn on **Developer mode** (toggle in the top-right corner).
 4. Click **Load unpacked**.
-5. Select the folder you downloaded (`MultiBox` or `MultiBox-main`, the one that contains `manifest.json`).
+5. Select the extracted folder (`MultiBox-<version>`, the one that contains `manifest.json`).
 6. (Optional, for the test page) in the extension's **Details**, turn on **Allow access to file URLs**.
 
 Keep the folder where it is: Chrome loads the extension from it every time it starts.
-To update, download the new version into the same folder and click **↻ (Reload)** in `chrome://extensions`.
+To update, download the new ZIP from the [Releases page](https://github.com/Dexmodzz/MultiBox/releases/latest),
+replace the folder's contents and click **↻ (Reload)** in `chrome://extensions`.
 
 Tabs that were already open before installation need to be reloaded. Opening the extension popup
 on such a tab also tries to activate it automatically.

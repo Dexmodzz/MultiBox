@@ -10,22 +10,21 @@ Tutti i dati restano in `chrome.storage.local`: l'estensione non usa servizi est
 
 ## Installazione
 
-1. **Scarica l'estensione** da <https://github.com/Dexmodzz/MultiBox>:
-   - **Senza git**: pulsante verde **Code** → **Download ZIP**, poi estrai lo ZIP
-     (otterrai la cartella `MultiBox-main`);
-   - **Con git**:
-     ```bash
-     git clone https://github.com/Dexmodzz/MultiBox.git
-     ```
+1. **Scarica l'estensione** dalla **[pagina Releases](https://github.com/Dexmodzz/MultiBox/releases/latest)**:
+   scarica il file `MultiBox-<versione>.zip` (es. `MultiBox-1.1.1.zip`) ed estrailo
+   (otterrai la cartella `MultiBox-<versione>`).
+
+   Chi sviluppa può anche clonare il repository: `git clone https://github.com/Dexmodzz/MultiBox.git`
 2. Apri `chrome://extensions` in Chrome (o `brave://extensions` in Brave).
 3. Attiva **Modalità sviluppatore** (interruttore in alto a destra).
 4. Clicca **Carica estensione non pacchettizzata**.
-5. Seleziona la cartella scaricata (`MultiBox` o `MultiBox-main`, quella che contiene `manifest.json`).
+5. Seleziona la cartella estratta (`MultiBox-<versione>`, quella che contiene `manifest.json`).
 6. (Facoltativo, per la pagina di test) nei **Dettagli** dell'estensione attiva
    **Consenti l'accesso agli URL dei file**.
 
 Non spostare né cancellare la cartella: Chrome carica l'estensione da lì a ogni avvio.
-Per aggiornarla, scarica la nuova versione nella stessa cartella e premi **↻ (Ricarica)** in `chrome://extensions`.
+Per aggiornarla, scarica il nuovo ZIP dalla [pagina Releases](https://github.com/Dexmodzz/MultiBox/releases/latest),
+sostituisci il contenuto della cartella e premi **↻ (Ricarica)** in `chrome://extensions`.
 
 Le schede già aperte prima dell'installazione vanno ricaricate (oppure basta aprire il popup
 dell'estensione su quella scheda: prova a attivarla automaticamente).
