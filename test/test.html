@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Multi Box Clipboard - pagina di test</title>
+  <style>
+    body { font: 15px/1.5 system-ui, sans-serif; max-width: 760px; margin: 24px auto; padding: 0 16px; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 17px; margin-top: 28px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+    label { display: block; font-weight: 600; margin-bottom: 4px; }
+    textarea, input[type=text], .editable { width: 100%; box-sizing: border-box; padding: 6px 8px; font: inherit; border: 1px solid #aab; border-radius: 6px; }
+    textarea { min-height: 80px; }
+    .editable { min-height: 80px; background: #fbfbfe; }
+    .sample { background: #f2f4f8; padding: 10px 14px; border-radius: 8px; }
+    iframe { width: 100%; height: 150px; border: 1px dashed #889; border-radius: 6px; }
+    #log { font: 12px ui-monospace, monospace; background: #111; color: #9f9; padding: 8px; border-radius: 6px; min-height: 60px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Multi Box Clipboard &mdash; pagina di test</h1>
+
+  <h2>Testo da selezionare</h2>
+  <p class="sample" id="sample1">Primo testo di prova: selezionami e premi <b>Alt+1</b>.</p>
+  <p class="sample" id="sample2">Secondo testo,
+  su più righe: selezionami e premi <b>Alt+2</b>, oppure tasto destro &rarr; Multi Box &rarr; Copia nel &rarr; Box 2.</p>
+
+  <h2>Sei textarea</h2>
+  <div class="grid">
+    <div><label for="ta1">Textarea 1</label><textarea id="ta1">Testo già presente nella textarea 1</textarea></div>
+    <div><label for="ta2">Textarea 2</label><textarea id="ta2"></textarea></div>
+    <div><label for="ta3">Textarea 3</label><textarea id="ta3"></textarea></div>
+    <div><label for="ta4">Textarea 4</label><textarea id="ta4"></textarea></div>
+    <div><label for="ta5">Textarea 5</label><textarea id="ta5"></textarea></div>
+    <div><label for="ta6">Textarea 6</label><textarea id="ta6"></textarea></div>
+  </div>
+
+  <h2>Input di testo</h2>
+  <label for="inp">Input</label>
+  <input type="text" id="inp" value="Inizio  fine (metti il cursore tra i due spazi)">
+
+  <h2>Contenteditable</h2>
+  <div class="editable" id="ce" contenteditable="true">Clicca a metà di questa frase e premi Alt+1: il testo deve comparire nel punto del cursore, non alla fine.</div>
+
+  <h2>Iframe (stessa estensione, frame separato)</h2>
+  <iframe title="Frame di test" srcdoc="<!doctype html><meta charset='utf-8'><body style='font:14px system-ui;margin:8px'><p>Testo nel frame: selezionami e premi Alt+3.</p><textarea style='width:95%;height:50px'></textarea></body>"></iframe>
+
+  <h2>Log eventi input/change</h2>
+  <div id="log" aria-live="polite"></div>
+
+  <script>
+    // Mostra gli eventi lanciati dall'estensione dopo un incolla.
+    const log = document.getElementById('log');
+    function write(line) {
+      log.textContent = (line + '\n' + log.textContent).split('\n').slice(0, 12).join('\n');
+    }
+    ['input', 'change'].forEach((type) => {
+      document.addEventListener(type, (e) => {
+        const t = e.target;
+        write(new Date().toLocaleTimeString() + '  ' + type + '  su #' + (t.id || t.tagName.toLowerCase()));
+      }, true);
+    });
+  </script>
+</body>
+</html>
