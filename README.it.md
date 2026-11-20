@@ -14,20 +14,26 @@ In questo README i nomi di pulsanti e menu sono quelli della versione italiana.
 ## Installazione
 
 1. **Scarica l'estensione** dalla **[pagina Releases](https://github.com/Dexmodzz/MultiBox/releases/latest)**:\
-   scarica il file `MultiBox-<versione>.zip` (es. `MultiBox-1.1.2.zip`) ed estrailo
-   (otterrai la cartella `MultiBox-<versione>`).
+   scarica il file `MultiBox-<versione>.zip` (es. `MultiBox-1.1.2.zip`).
 
    Chi sviluppa può anche clonare il repository: `git clone https://github.com/Dexmodzz/MultiBox.git`
-2. Apri `chrome://extensions` in Chrome (o `brave://extensions` in Brave).
-3. Attiva **Modalità sviluppatore** (interruttore in alto a destra).
-4. Clicca **Carica estensione non pacchettizzata**.
-5. Seleziona la cartella estratta (`MultiBox-<versione>`, quella che contiene `manifest.json`).
-6. (Facoltativo, per la pagina di test) nei **Dettagli** dell'estensione attiva
+   (in quel caso salta il passo 2).
+2. **Decomprimi (unzip) il file ZIP.** Il browser non può caricare direttamente il `.zip`: va prima estratto.
+   - **Windows**: tasto destro sul file → **Estrai tutto…** → **Estrai**.
+   - **macOS**: doppio clic sul file.
+   - **Linux**: tasto destro sul file → **Estrai qui**, oppure da terminale `unzip MultiBox-<versione>.zip`.
+
+   Otterrai la cartella `MultiBox-<versione>`, che contiene `manifest.json`.
+3. Apri `chrome://extensions` in Chrome (o `brave://extensions` in Brave).
+4. Attiva **Modalità sviluppatore** (interruttore in alto a destra).
+5. Clicca **Carica estensione non pacchettizzata**.
+6. Seleziona la **cartella estratta** (`MultiBox-<versione>`, quella che contiene `manifest.json`), non il file `.zip`.
+7. (Facoltativo, per la pagina di test) nei **Dettagli** dell'estensione attiva
    **Consenti l'accesso agli URL dei file**.
 
 Non spostare né cancellare la cartella: Chrome carica l'estensione da lì a ogni avvio.
 Per aggiornarla, scarica il nuovo ZIP dalla [pagina Releases](https://github.com/Dexmodzz/MultiBox/releases/latest),
-sostituisci il contenuto della cartella e premi **↻ (Ricarica)** in `chrome://extensions`.
+decomprimilo, sostituisci il contenuto della cartella con i file estratti e premi **↻ (Ricarica)** in `chrome://extensions`.
 
 Le schede già aperte prima dell'installazione vanno ricaricate (oppure basta aprire il popup
 dell'estensione su quella scheda: prova a attivarla automaticamente).

@@ -15,19 +15,25 @@ stays saved even after you close the browser.
 ## Installation
 
 1. **Download the extension** from the **[Releases page](https://github.com/Dexmodzz/MultiBox/releases/latest)**:\
-   download the `MultiBox-<version>.zip` file (e.g. `MultiBox-1.1.2.zip`) and extract it
-   (you'll get a `MultiBox-<version>` folder).
+   download the `MultiBox-<version>.zip` file (e.g. `MultiBox-1.1.2.zip`).
 
    Developers can also clone the repository: `git clone https://github.com/Dexmodzz/MultiBox.git`
-2. Open `chrome://extensions` (or `brave://extensions`).
-3. Turn on **Developer mode** (toggle in the top-right corner).
-4. Click **Load unpacked**.
-5. Select the extracted folder (`MultiBox-<version>`, the one that contains `manifest.json`).
-6. (Optional, for the test page) in the extension's **Details**, turn on **Allow access to file URLs**.
+   (in that case skip step 2).
+2. **Unzip the ZIP file.** The browser cannot load the `.zip` directly: you must extract it first.
+   - **Windows**: right-click the file → **Extract All…** → **Extract**.
+   - **macOS**: double-click the file.
+   - **Linux**: right-click the file → **Extract Here**, or run `unzip MultiBox-<version>.zip` in a terminal.
+
+   You'll get a `MultiBox-<version>` folder that contains `manifest.json`.
+3. Open `chrome://extensions` (or `brave://extensions`).
+4. Turn on **Developer mode** (toggle in the top-right corner).
+5. Click **Load unpacked**.
+6. Select the **extracted folder** (`MultiBox-<version>`, the one that contains `manifest.json`), not the `.zip` file.
+7. (Optional, for the test page) in the extension's **Details**, turn on **Allow access to file URLs**.
 
 Keep the folder where it is: Chrome loads the extension from it every time it starts.
 To update, download the new ZIP from the [Releases page](https://github.com/Dexmodzz/MultiBox/releases/latest),
-replace the folder's contents and click **↻ (Reload)** in `chrome://extensions`.
+unzip it, replace the folder's contents with the extracted files and click **↻ (Reload)** in `chrome://extensions`.
 
 Tabs that were already open before installation need to be reloaded. Opening the extension popup
 on such a tab also tries to activate it automatically.
