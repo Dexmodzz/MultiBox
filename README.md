@@ -15,7 +15,7 @@ stays saved even after you close the browser.
 
 ## Installation
 
-1. **Download the extension** from the **[Releases page](https://github.com/Dexmodzz/MultiBox/releases/latest)**:
+1. **Download the extension** from the **[Releases page](https://github.com/Dexmodzz/MultiBox/releases/latest)**:\
    download the `MultiBox-<version>.zip` file (e.g. `MultiBox-1.1.1.zip`) and extract it
    (you'll get a `MultiBox-<version>` folder).
 

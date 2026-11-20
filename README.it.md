@@ -10,7 +10,7 @@ Tutti i dati restano in `chrome.storage.local`: l'estensione non usa servizi est
 
 ## Installazione
 
-1. **Scarica l'estensione** dalla **[pagina Releases](https://github.com/Dexmodzz/MultiBox/releases/latest)**:
+1. **Scarica l'estensione** dalla **[pagina Releases](https://github.com/Dexmodzz/MultiBox/releases/latest)**:\
    scarica il file `MultiBox-<versione>.zip` (es. `MultiBox-1.1.1.zip`) ed estrailo
    (otterrai la cartella `MultiBox-<versione>`).
 
