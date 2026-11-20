@@ -1,17 +1,30 @@
 {
   "manifest_version": 3,
-  "name": "Multi Box Clipboard",
-  "version": "1.1.1",
-  "description": "Da 1 a 20 box di appunti persistenti: copia e incolla con Alt+1..9/Alt+0, menu contestuale e pannello.",
-  "permissions": ["storage", "contextMenus", "activeTab", "scripting"],
+  "name": "__MSG_appName__",
+  "version": "1.1.2",
+  "description": "__MSG_appDescription__",
+  "default_locale": "en",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "activeTab",
+    "scripting"
+  ],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["panel.js", "content.js"],
-      "css": ["panel.css"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "panel.js",
+        "content.js"
+      ],
+      "css": [
+        "panel.css"
+      ],
       "all_frames": true,
       "match_origin_as_fallback": true,
       "run_at": "document_idle"
@@ -19,12 +32,19 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["panel.css", "icons/icon16.png", "icons/icon48.png", "icons/icon128.png"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "panel.css",
+        "icons/icon16.png",
+        "icons/icon48.png",
+        "icons/icon128.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "action": {
-    "default_title": "Multi Box Clipboard",
+    "default_title": "__MSG_actionTitle__",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",

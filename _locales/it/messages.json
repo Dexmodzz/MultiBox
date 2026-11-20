@@ -1,0 +1,11 @@
+{
+  "appName": {
+    "message": "Multi Box Clipboard"
+  },
+  "appDescription": {
+    "message": "Fino a 20 box di appunti salvati: copia e incolla con Alt+1..9/Alt+0, dal menu del tasto destro o da un pannello."
+  },
+  "actionTitle": {
+    "message": "Multi Box Clipboard"
+  }
+}

@@ -270,28 +270,28 @@
     if (!isEditable(el)) return { ok: false, reason: 'not-editable' };
     const box = boxes[id - 1];
     if (!box) {
-      showToast('Il Box ' + id + ' non esiste', true);
+      showToast(MBC.t('boxMissing', { n: id }), true);
       return { ok: false, reason: 'missing' };
     }
     if (!box.text) {
-      showToast('Box ' + id + ' vuoto', true, id);
+      showToast(MBC.t('boxEmpty', { n: id }), true, id);
       return { ok: false, reason: 'empty' };
     }
     if (isTextField(el)) insertIntoTextField(el, box.text);
     else insertIntoContentEditable(el, box.text);
     fireInputEvents(el, box.text);
-    showToast('Incollato dal Box ' + id, false, id);
+    showToast(MBC.t('pastedFrom', { n: id }), false, id);
     return { ok: true };
   }
 
   function saveToBox(id, text) {
     if (id > boxes.length) {
-      showToast('Il Box ' + id + ' non esiste: aggiungilo con + nel pannello', true);
+      showToast(MBC.t('boxMissingAdd', { n: id }), true);
       return;
     }
     MBC.setBoxText(id, text)
-      .then(() => showToast('Salvato nel Box ' + id, false, id))
-      .catch((err) => showToast(err.message || 'Salvataggio non riuscito', true));
+      .then(() => showToast(MBC.t('savedTo', { n: id }), false, id))
+      .catch((err) => showToast(err.message || MBC.t('saveFailed'), true));
   }
 
   /* ------------------------------------------------------------------ */
@@ -313,8 +313,6 @@
     fab = document.createElement('button');
     fab.type = 'button';
     fab.className = 'mbc-fab';
-    fab.title = 'Multi Box Clipboard (Alt+M)';
-    fab.setAttribute('aria-label', 'Apri Multi Box Clipboard');
     const img = document.createElement('img');
     img.className = 'mbc-fab-icon';
     img.src = chrome.runtime.getURL('icons/icon48.png');
@@ -331,7 +329,20 @@
     shadow.append(fab, panelWrap);
     applyStyles(shadow, host);
     document.documentElement.appendChild(host);
+    applyPageButtonSetting();
     updateBadge();
+  }
+
+  /**
+   * Impostazione "Pulsante nelle pagine web" (nascosto di default).
+   * Anche col pulsante nascosto, Alt+M apre il pannello.
+   */
+  function applyPageButtonSetting() {
+    if (!fab) return;
+    const show = !!MBC.getSettings().showPageButton;
+    fab.hidden = !show;
+    // Senza pulsante il pannello si apre più in alto, al suo posto.
+    panelWrap.classList.toggle('mbc-panel-wrap--nofab', !show);
   }
 
   function updateBadge() {
@@ -339,7 +350,8 @@
     const n = MBC.countFull(boxes);
     badge.textContent = String(n);
     badge.classList.toggle('mbc-badge--zero', n === 0);
-    fab.setAttribute('aria-label', 'Apri Multi Box Clipboard (' + n + ' box pieni)');
+    fab.title = MBC.t('fabTitle');
+    fab.setAttribute('aria-label', MBC.t('fabAria', { n }));
   }
 
   function openPanel() {
@@ -456,5 +468,12 @@
     }
   });
 
-  ensureUi();
+  // Lingua e impostazioni: aggiorna pulsante e testi quando cambiano.
+  MBC.onSettingsChanged(() => {
+    applyPageButtonSetting();
+    updateBadge();
+  });
+
+  // Crea l'interfaccia dopo aver letto le impostazioni (lingua, pulsante visibile o no).
+  MBC.ready.then(ensureUi);
 })();

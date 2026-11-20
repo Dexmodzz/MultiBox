@@ -48,16 +48,17 @@ function buildMenus() {
   rebuildPending = true;
   menuBuild = menuBuild.then(async () => {
     rebuildPending = false;
+    await MBC.loadSettings(); // lingua dei titoli del menu
     const boxes = await MBC.getBoxes();
     await chrome.contextMenus.removeAll();
     await createMenu({ id: PARENT_ID, title: 'Multi Box', contexts: ['selection', 'editable'] });
-    await createMenu({ id: COPY_MENU_ID, parentId: PARENT_ID, title: 'Copia nel', contexts: ['selection'] });
-    await createMenu({ id: PASTE_MENU_ID, parentId: PARENT_ID, title: 'Incolla da', contexts: ['editable'] });
+    await createMenu({ id: COPY_MENU_ID, parentId: PARENT_ID, title: MBC.t('menuCopy'), contexts: ['selection'] });
+    await createMenu({ id: PASTE_MENU_ID, parentId: PARENT_ID, title: MBC.t('menuPaste'), contexts: ['editable'] });
     for (const box of boxes) {
-      await createMenu({ id: 'copy-' + box.id, parentId: COPY_MENU_ID, title: 'Box ' + box.id, contexts: ['selection'] });
+      await createMenu({ id: 'copy-' + box.id, parentId: COPY_MENU_ID, title: MBC.t('boxTitle', { n: box.id }), contexts: ['selection'] });
     }
     for (const box of boxes) {
-      await createMenu({ id: 'paste-' + box.id, parentId: PASTE_MENU_ID, title: 'Box ' + box.id, contexts: ['editable'] });
+      await createMenu({ id: 'paste-' + box.id, parentId: PASTE_MENU_ID, title: MBC.t('boxTitle', { n: box.id }), contexts: ['editable'] });
     }
   }).catch((err) => console.error('[Multi Box] creazione menu non riuscita', err));
   return menuBuild;
@@ -80,9 +81,16 @@ chrome.runtime.onStartup.addListener(buildMenus);
 // il browser può aver ripristinato un menu vecchio della sessione precedente.
 buildMenus();
 
-// Box aggiunti o eliminati: il menu segue il nuovo numero di box.
+// Box aggiunti o eliminati, o lingua cambiata: il menu si aggiorna.
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area !== 'local' || !changes[MBC.STORAGE_KEY]) return;
+  if (area !== 'local') return;
+  const settingsChange = changes[MBC.SETTINGS_KEY];
+  if (settingsChange) {
+    const before = MBC.normalizeSettings(settingsChange.oldValue);
+    const after = MBC.normalizeSettings(settingsChange.newValue);
+    if (before.language !== after.language) buildMenus();
+  }
+  if (!changes[MBC.STORAGE_KEY]) return;
   const count = MBC.normalizeBoxes(changes[MBC.STORAGE_KEY].newValue).length;
   const oldValue = changes[MBC.STORAGE_KEY].oldValue;
   const oldCount = Array.isArray(oldValue) ? MBC.normalizeBoxes(oldValue).length : -1;
@@ -119,6 +127,7 @@ function toast(tabId, frameId, message, warn, boxId) {
 }
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+  await MBC.ready; // lingua dei messaggi
   const match = /^(copy|paste)-(\d+)$/.exec(String(info.menuItemId));
   if (!match) return;
   const action = match[1];
@@ -130,7 +139,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   const current = await MBC.getBoxes();
   if (id > current.length) {
     buildMenus();
-    if (tabId != null && tabId >= 0) toast(tabId, frameId, 'Il Box ' + id + ' non esiste più', true);
+    if (tabId != null && tabId >= 0) toast(tabId, frameId, MBC.t('boxGone', { n: id }), true);
     return;
   }
 
@@ -147,7 +156,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     if (!text) return;
     try {
       await MBC.setBoxText(id, text);
-      if (tabId != null && tabId >= 0) toast(tabId, frameId, 'Salvato nel Box ' + id, false, id);
+      if (tabId != null && tabId >= 0) toast(tabId, frameId, MBC.t('savedTo', { n: id }), false, id);
     } catch (err) {
       console.error('[Multi Box] salvataggio non riuscito', err);
     }
@@ -159,7 +168,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   try {
     const res = await sendWithInjection(tabId, { type: 'pasteBox', id }, frameId);
     if (res && !res.ok && res.reason === 'not-editable') {
-      toast(tabId, frameId, 'Nessun campo di testo attivo', true);
+      toast(tabId, frameId, MBC.t('noField'), true);
     }
   } catch (err) {
     console.warn('[Multi Box] impossibile incollare in questo frame:', err && err.message);

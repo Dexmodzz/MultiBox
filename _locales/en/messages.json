@@ -1,0 +1,11 @@
+{
+  "appName": {
+    "message": "Multi Box Clipboard"
+  },
+  "appDescription": {
+    "message": "Up to 20 saved clipboard boxes: copy and paste with Alt+1..9/Alt+0, from the right-click menu or from a panel."
+  },
+  "actionTitle": {
+    "message": "Multi Box Clipboard"
+  }
+}

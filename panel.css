@@ -865,3 +865,424 @@
     animation: none !important;
   }
 }
+
+/* ===================== Popup compatto: tutto visibile senza scorrere ===================== */
+/* Le icone copia/svuota nell'intestazione esistono in ogni card ma si vedono solo nel popup. */
+.mbc-head-actions {
+  display: none;
+  align-items: center;
+  gap: 2px;
+  margin-left: 4px;
+}
+
+.mbc-head-btn {
+  width: 26px;
+  height: 26px;
+}
+
+.mbc-head-btn .mbc-icon {
+  width: 15px;
+  height: 15px;
+}
+
+.mbc-head-btn.mbc-btn--done,
+.mbc-head-btn.mbc-btn--done:hover:not(:disabled) {
+  background: var(--mbc-success);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.mbc-panel--popup {
+  width: 380px;
+  max-height: none; /* calcolata da fitLayout() in panel.js */
+  transition: width 0.2s ease-out;
+}
+
+.mbc-panel--popup[data-cols="2"] {
+  width: 600px;
+}
+
+.mbc-panel--popup[data-cols="3"] {
+  width: 700px;
+}
+
+.mbc-panel--popup[data-cols="4"] {
+  width: 778px; /* + 20 px di margine = 798 px, sotto il limite di 800 del popup */
+}
+
+/* Intestazione, barra e footer più bassi nel popup */
+.mbc-panel--popup .mbc-header {
+  padding: 10px 12px 8px;
+}
+
+.mbc-panel--popup .mbc-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+}
+
+.mbc-panel--popup .mbc-progress {
+  padding: 0 12px 8px;
+}
+
+.mbc-panel--popup .mbc-footer {
+  padding: 8px 10px;
+}
+
+.mbc-panel--popup .mbc-list {
+  display: grid;
+  grid-template-columns: repeat(var(--mbc-cols, 1), minmax(0, 1fr));
+  align-content: start;
+  gap: 6px;
+  padding: 0 10px 10px;
+}
+
+.mbc-panel--popup .mbc-card {
+  padding: 6px 8px 6px 12px;
+  border-radius: 12px;
+}
+
+.mbc-panel--popup .mbc-card::before {
+  top: 7px;
+  bottom: 7px;
+}
+
+.mbc-panel--popup .mbc-card-head {
+  gap: 6px;
+  min-height: 22px;
+}
+
+.mbc-panel--popup .mbc-chip {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+.mbc-panel--popup .mbc-card-title {
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.mbc-panel--popup .mbc-head-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+}
+
+.mbc-panel--popup .mbc-textarea {
+  margin-top: 2px;
+  min-height: 20px;
+  padding: 2px 0;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.mbc-panel--popup .mbc-actions,
+.mbc-panel--popup .mbc-count {
+  display: none;
+}
+
+.mbc-panel--popup .mbc-head-actions {
+  display: inline-flex;
+}
+
+.mbc-panel--popup .mbc-kbd {
+  margin-left: auto;
+}
+
+.mbc-panel--popup .mbc-kbd[hidden] + .mbc-head-actions {
+  margin-left: auto;
+}
+
+.mbc-panel--popup .mbc-card--empty .mbc-head-actions {
+  visibility: hidden;
+}
+
+/* Il popup non deve mai mostrare la barra di scorrimento esterna */
+.mbc-popup-body:has(.mbc-panel--popup) {
+  overflow: hidden;
+}
+
+/* L'avviso del popup deve sparire davvero quando è nascosto
+   (display:flex qui sopra altrimenti annullerebbe l'attributo hidden). */
+.mbc-banner[hidden] {
+  display: none !important;
+}
+
+/* Nel popup un box con testo lungo scorre al suo interno: barra discreta, visibile al passaggio */
+.mbc-panel--popup .mbc-textarea {
+  scrollbar-width: none;
+}
+
+.mbc-panel--popup .mbc-textarea:hover,
+.mbc-panel--popup .mbc-textarea:focus {
+  scrollbar-width: thin;
+}
+
+/* ===================== Intestazione dei box: scorciatoia sempre a destra ===================== */
+/* Il titolo prende tutto lo spazio libero: contatore, icone e "Alt+N" finiscono
+   allineati al bordo destro, con "Alt+N" sempre ultimo. */
+.mbc-card-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mbc-card-head .mbc-count,
+.mbc-card-head .mbc-kbd,
+.mbc-panel--popup .mbc-kbd,
+.mbc-panel--popup .mbc-head-actions,
+.mbc-panel--popup .mbc-kbd[hidden] + .mbc-head-actions {
+  margin-left: 0;
+}
+
+.mbc-card-head .mbc-kbd {
+  flex: 0 0 auto;
+}
+
+.mbc-panel--popup .mbc-head-actions {
+  margin-right: 2px;
+}
+
+/* ===================== Popup a tutta finestra (senza cornice interna) ===================== */
+/* Brave/Chrome disegnano la finestra del popup: la card la riempie del tutto,
+   così gli unici angoli sono quelli della finestra. */
+.mbc-popup-body:has(.mbc-panel--popup) {
+  padding: 0;
+  background: var(--mbc-solid);
+}
+
+.mbc-panel--popup {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.mbc-panel--popup[data-cols="4"] {
+  width: 800px;
+}
+
+.mbc-popup-body:has(.mbc-panel--popup) .mbc-banner {
+  margin: 10px 10px 0;
+}
+
+/* Popup: intestazione dei box più stretta, così "Box 10"…"Box 20" non vengono accorciati
+   anche con 4 colonne. */
+.mbc-panel--popup .mbc-card-head {
+  gap: 4px;
+}
+
+.mbc-panel--popup .mbc-head-actions {
+  gap: 0;
+  margin-right: 1px;
+}
+
+.mbc-panel--popup .mbc-head-btn {
+  width: 21px;
+  height: 21px;
+}
+
+.mbc-panel--popup .mbc-kbd {
+  padding: 1px 4px;
+  font-size: 10px;
+}
+
+/* ===================== Impostazioni ===================== */
+
+.mbc-fab[hidden] {
+  display: none !important;
+}
+
+/* Senza pulsante flottante il pannello si apre al suo posto, più in alto */
+.mbc-panel-wrap--nofab {
+  top: 12px;
+}
+
+.mbc-gear .mbc-icon {
+  transition: transform 0.4s var(--mbc-ease);
+}
+
+.mbc-gear:hover .mbc-icon {
+  transform: rotate(45deg);
+}
+
+.mbc-btn--active,
+.mbc-btn--icon.mbc-btn--active {
+  background: var(--mbc-soft-hover);
+  color: var(--mbc-text);
+}
+
+.mbc-btn--active .mbc-icon {
+  transform: rotate(90deg);
+}
+
+.mbc-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 2px 14px 14px;
+  animation: mbc-rise 0.25s var(--mbc-ease);
+}
+
+.mbc-settings[hidden],
+.mbc-list[hidden],
+.mbc-progress[hidden],
+.mbc-footer[hidden] {
+  display: none !important;
+}
+
+.mbc-settings-title {
+  font-weight: 700;
+  color: var(--mbc-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+}
+
+.mbc-settings-section {
+  padding: 12px;
+  border: 1px solid var(--mbc-border);
+  border-radius: 14px;
+  background: var(--mbc-card);
+}
+
+.mbc-settings-label {
+  font-weight: 650;
+  font-size: 13px;
+}
+
+.mbc-lang-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.mbc-lang {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 9px 12px;
+  border: 1.5px solid var(--mbc-border-strong);
+  border-radius: 11px;
+  background: transparent;
+  color: var(--mbc-text);
+  font: 600 13px/1.2 var(--mbc-font);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+
+.mbc-lang:hover {
+  background: var(--mbc-soft);
+}
+
+.mbc-lang:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+.mbc-lang--on {
+  border-color: #6366f1;
+  background: color-mix(in srgb, #6366f1 12%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, #6366f1 16%, transparent);
+}
+
+.mbc-flag {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 26px;
+  height: 18px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.15), 0 2px 4px rgba(15, 23, 42, 0.15);
+}
+
+.mbc-flag svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mbc-setting-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mbc-setting-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.mbc-setting-desc {
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--mbc-muted);
+}
+
+/* Interruttore on/off */
+.mbc-switch {
+  appearance: none;
+  position: relative;
+  flex-shrink: 0;
+  width: 42px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--mbc-border-strong);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mbc-switch[aria-checked="true"] {
+  background: var(--mbc-grad);
+}
+
+.mbc-switch:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+.mbc-switch-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s var(--mbc-ease);
+}
+
+.mbc-switch[aria-checked="true"] .mbc-switch-knob {
+  transform: translateX(18px);
+}
+
+.mbc-settings-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.mbc-settings-about {
+  font-size: 11px;
+  color: var(--mbc-faint);
+}
+
+.mbc-settings-done {
+  --mbc-hue: #6366f1;
+}
+
+/* Nel popup la vista impostazioni ha una larghezza comoda anche con 1 colonna */
+.mbc-panel--popup .mbc-settings {
+  min-width: 356px;
+}
